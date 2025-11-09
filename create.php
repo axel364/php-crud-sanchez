@@ -63,84 +63,100 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Add Student</title>
 <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
+        font-family: "Poppins", Arial, sans-serif;
         background: #121212;
-        color: #eaeaea;
-        font-family: Arial, sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        margin: 0;
+        color: #f5f5f5;
     }
-    .form-box {
+
+    .form-card {
         background: #1e1e1e;
-        width: 360px;
-        padding: 24px;
-        border-radius: 10px;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+        width: 400px;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(255,102,178,0.3);
     }
+
     h2 {
         text-align: center;
-        color: #00adb5;
-        margin-bottom: 14px;
+        color: #ff66b2;
+        margin-bottom: 25px;
     }
-    label {
-        display: block;
-        font-size: 14px;
-        font-weight: 600;
-        margin-top: 10px;
+
+    .input-group {
+        position: relative;
+        margin-top: 15px;
     }
+
+    .input-group i {
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        transform: translateY(-50%);
+        color: #ff66b2;
+        font-size: 16px;
+    }
+
     input, select {
         width: 100%;
-        padding: 10px;
-        margin-top: 6px;
-        border-radius: 6px;
+        padding: 12px 12px 12px 38px;
+        margin-top: 5px;
+        border-radius: 8px;
         border: none;
-        background: #2c2c2c;
+        background: #262626;
         color: #fff;
-        box-sizing: border-box;
+        font-size: 14px;
     }
+
     input[type="submit"] {
-        background: #00adb5;
-        color: #051017;
-        font-weight: 700;
-        cursor: pointer;
-        margin-top: 16px;
+        width: 100%;
+        margin-top: 20px;
+        background: #ff66b2;
+        color: #121212;
+        font-weight: bold;
+        padding: 12px;
+        border-radius: 8px;
         border: none;
+        cursor: pointer;
+        transition: 0.3s;
     }
+
+    input[type="submit"]:hover {
+        background: #ff3399;
+    }
+
     .error-box, .success {
-        padding: 8px 10px;
+        margin-bottom: 15px;
+        padding: 10px;
         border-radius: 6px;
-        margin-bottom: 10px;
     }
-    .error-box {
-        background: #331010;
-        border: 1px solid #5c1c1c;
-        color: #ffb3b3;
-    }
-    .success {
-        background: #0f2f19;
-        border: 1px solid #235c32;
-        color: #b7f0c8;
-        text-align: center;
-    }
-    a {
+
+    .error-box { background: #331010; border:1px solid #5c1c1c; color: #ffb3b3; }
+    .success { background: #1f2e1f; border:1px solid #235c32; color: #b7f0c8; text-align:center; }
+
+    a.back {
         display: block;
-        margin-top: 12px;
         text-align: center;
-        color: #00adb5;
+        margin-top: 15px;
+        color: #ff66b2;
         text-decoration: none;
     }
+    a.back:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
-<div class="form-box">
+
+<div class="form-card">
     <h2>Add Student Record</h2>
 
     <?php if ($errors): ?>
         <div class="error-box">
-            <ul style="margin:0;padding-left:18px;">
+            <ul style="margin:0; padding-left:18px;">
                 <?php foreach ($errors as $err): ?>
                     <li><?= htmlspecialchars($err) ?></li>
                 <?php endforeach; ?>
@@ -153,40 +169,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="post">
         <?php
         $fields = [
-            'student_no' => 'Student Number',
-            'fullname'   => 'Full Name',
-            'branch'     => 'Branch',
-            'email'      => 'Email',
-            'contact'    => 'Contact'
+            'student_no' => ['label'=>'Student Number','icon'=>'fa-id-card'],
+            'fullname'   => ['label'=>'Full Name','icon'=>'fa-user'],
+            'branch'     => ['label'=>'Branch','icon'=>'fa-school'],
+            'email'      => ['label'=>'Email','icon'=>'fa-envelope'],
+            'contact'    => ['label'=>'Contact','icon'=>'fa-phone']
         ];
         ?>
 
-        <?php foreach ($fields as $key => $label): ?>
-            <label for="<?= $key ?>"><?= $label ?></label>
-            <?php if ($key === 'branch'): ?>
-                <select id="branch" name="branch" required>
-                    <option value="">Select Branch</option>
-                    <?php foreach (['BSIT','BSTM','BSAMT','BSAE'] as $b): ?>
-                        <option value="<?= $b ?>" <?= $formData['branch'] === $b ? 'selected' : '' ?>>
-                            <?= $b ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            <?php else: ?> 
-                <input
-                    id="<?= $key ?>"
-                    name="<?= $key ?>"
-                    type="<?= $key === 'email' ? 'email' : 'text' ?>"
-                    value="<?= htmlspecialchars($formData[$key]) ?>"
-                    required
-                >
-            <?php endif; ?>
+        <?php foreach ($fields as $key => $data): ?>
+            <div class="input-group">
+                <i class="fa <?= $data['icon'] ?>"></i>
+                <?php if ($key === 'branch'): ?>
+                    <select id="<?= $key ?>" name="<?= $key ?>" required>
+                        <option value="">Select Branch</option>
+                        <?php foreach (['BSIT','BSTM','BSAMT','BSAE'] as $b): ?>
+                            <option value="<?= $b ?>" <?= $formData[$key] === $b ? 'selected' : '' ?>><?= $b ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php else: ?>
+                    <input id="<?= $key ?>" name="<?= $key ?>" type="<?= $key==='email'?'email':'text' ?>" value="<?= htmlspecialchars($formData[$key]) ?>" placeholder="<?= $data['label'] ?>" required>
+                <?php endif; ?>
+            </div>
         <?php endforeach; ?>
 
         <input type="submit" value="Save Student">
     </form>
 
-    <a href="index.php">← Back to Homepage</a>
+    <a href="index.php" class="back">← Back to Homepage</a>
 </div>
+
 </body>
 </html>

@@ -72,102 +72,120 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <meta charset="UTF-8">
 <title>Edit Student</title>
 <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
-        background: #121212;
-        color: #eee;
         font-family: Arial, sans-serif;
+        background: #121212;
+        color: #f0f0f0;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        margin: 0;
+        min-height: 100vh;
     }
-    .form-container {
+    .form-card {
         background: #1f1f1f;
-        padding: 25px;
-        border-radius: 10px;
-        width: 350px;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        padding: 30px 25px;
+        border-radius: 12px;
+        width: 360px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.5);
     }
     h2 {
-        color: #00adb5;
         text-align: center;
+        color: #00adb5;
+        margin-bottom: 20px;
+    }
+    .input-group {
+        position: relative;
         margin-bottom: 15px;
     }
-    label {
-        display: block;
-        font-weight: bold;
-        margin-top: 10px;
-    }
-    input, select {
+    .input-group input,
+    .input-group select {
         width: 100%;
-        padding: 10px;
-        margin-top: 6px;
+        padding: 12px 12px 12px 40px;
+        border-radius: 8px;
         border: none;
-        border-radius: 6px;
         background: #2c2c2c;
         color: #fff;
-        box-sizing: border-box;
+        font-size: 14px;
+    }
+    .input-group svg {
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        transform: translateY(-50%);
+        fill: #888;
+        width: 18px;
+        height: 18px;
     }
     input[type="submit"] {
-        background: #00adb5;
-        color: #000;
+        width: 100%;
+        padding: 12px;
+        background: #ff66b2;
+        border: none;
+        border-radius: 8px;
+        color: #121212;
         font-weight: bold;
         cursor: pointer;
-        margin-top: 15px;
-        transition: background 0.3s;
+        margin-top: 10px;
+        transition: background 0.3s, transform 0.2s;
     }
     input[type="submit"]:hover {
-        background: #019aa1;
+        background: #ff3399;
+        transform: translateY(-2px);
     }
-    a {
+    a.back-link {
         display: block;
         text-align: center;
-        color: #00adb5;
         margin-top: 15px;
+        color: #00adb5;
         text-decoration: none;
     }
-    a:hover {
+    a.back-link:hover {
         text-decoration: underline;
     }
 </style>
 </head>
 <body>
 
-<div class="form-container">
+<div class="form-card">
     <h2>Edit Student</h2>
-    <?= $message ?>
 
     <form method="POST">
-        <label for="student_no">Student No</label>
-        <input id="student_no" name="student_no" type="text"
-               value="<?= htmlspecialchars($student['student_no']) ?>" required>
+        <div class="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <input id="student_no" name="student_no" type="text" placeholder="Student Number" value="" required>
+        </div>
 
-        <label for="fullname">Full Name</label>
-        <input id="fullname" name="fullname" type="text"
-               value="<?= htmlspecialchars($student['fullname']) ?>" required>
+        <div class="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <input id="fullname" name="fullname" type="text" placeholder="Full Name" value="" required>
+        </div>
 
-        <label for="branch">Branch</label>
-        <select id="branch" name="branch" required>
-            <?php foreach (['BSIT','BSCS','BSCE','BSECE'] as $b): ?>
-                <option value="<?= $b ?>" <?= $student['branch'] === $b ? 'selected' : '' ?>>
-                    <?= $b ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
+        <div class="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+            <select id="branch" name="branch" required>
+                <option value="">Select Branch</option>
+                <option value="BSIT">BSIT</option>
+                <option value="BSCS">BSCS</option>
+                <option value="BSCE">BSCE</option>
+                <option value="BSECE">BSECE</option>
+            </select>
+        </div>
 
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email"
-               value="<?= htmlspecialchars($student['email']) ?>" required>
+        <div class="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <input id="email" name="email" type="email" placeholder="Email" value="" required>
+        </div>
 
-        <label for="contact">Contact</label>
-        <input id="contact" name="contact" type="text"
-               value="<?= htmlspecialchars($student['contact']) ?>" required>
+        <div class="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.75 21 3 13.25 3 4.5 3 3.95 3.45 3.5 4 3.5H7.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.12.35.03.74-.24 1.02l-2.2 2.2z"/></svg>
+            <input id="contact" name="contact" type="text" placeholder="Contact" value="" required>
+        </div>
 
         <input type="submit" value="Update Record">
     </form>
 
-    <a href="read.php">← Back to Student List</a>
+    <a href="read.php" class="back-link">← Back to Student List</a>
 </div>
 
 </body>

@@ -10,67 +10,103 @@
         margin: 0;
         padding: 0;
     }
+
     body {
-        font-family: Arial, sans-serif;
+        font-family: "Poppins", Arial, sans-serif;
         background: #121212;
-        color: #f0f0f0;
+        color: #f5f5f5;
+        display: flex;
+        height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        background: #1c1c1c;
+        width: 250px;
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        box-shadow: 2px 0 10px rgba(255, 192, 203, 0.2);
+    }
+
+    .sidebar h2 {
+        color: #ff66b2;
+        margin-bottom: 25px;
+        text-align: left;
+        font-size: 1.4em;
+        letter-spacing: 1px;
+    }
+
+    .sidebar a {
+        display: block;
+        width: 100%;
+        padding: 12px 15px;
+        margin: 8px 0;
+        text-decoration: none;
+        color: #fff;
+        background: #262626;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: 0.3s ease;
+    }
+
+    .sidebar a:hover {
+        background: #ff66b2;
+        color: #1c1c1c;
+        transform: translateX(5px);
+    }
+
+    /* Main Content */
+    .content {
+        flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        background: radial-gradient(circle at center, #1a1a1a, #0d0d0d);
+        text-align: center;
     }
-    h1 {
-        color: #00adb5;
+
+    .content h1 {
         font-size: 2.3em;
-        margin-bottom: 40px;
-        text-align: center;
+        color: #ff66b2;
+        margin-bottom: 10px;
+        text-shadow: 0 0 10px rgba(255, 102, 178, 0.4);
     }
-    .menu {
-        background: #1e1e1e;
-        border-radius: 10px;
-        padding: 25px 35px;
-        box-shadow: 0 0 15px rgba(0, 173, 181, 0.25);
-        text-align: center;
+
+    .content p {
+        color: #aaa;
+        font-size: 1em;
+        max-width: 500px;
     }
-    .menu a {
-        display: inline-block;
-        margin: 8px 12px;
-        padding: 12px 18px;
-        background: #00adb5;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 6px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-    .menu a:hover {
-        background: #019aa1;
-        transform: scale(1.05);
-    }
+
     footer {
         position: fixed;
-        bottom: 12px;
-        text-align: center;
-        color: #777;
+        bottom: 10px;
+        left: 270px;
         font-size: 0.9em;
-        width: 100%;
+        color: #777;
     }
 </style>
 </head>
 <body>
 
-    <h1>Student Branch Directory</h1>
+    <div class="sidebar">
+        <h2>📚 Student Directory</h2>
+        <a href="create.php">➕ Add Student</a>
+        <a href="read.php">📋 View Students</a>
+        <a href="read.php">✏️ Edit Student</a>
+        <a href="read.php">🗑️ Delete Student</a>
+    </div>
 
-    <div class="menu">
-        <a href="create.php">Add Student</a>
-        <a href="read.php">View Students</a>
-        <a href="read.php">Edit Student</a>
-        <a href="read.php">Delete Student</a>
+    <div class="content">
+        <h1>Welcome to the Student Branch Directory</h1>
+        <p>Manage student records easily. You can add, view, edit, or delete data using the sidebar menu.</p>
     </div>
 
     <footer>
-        &copy; <?= date('Y'); ?> Student Branch Directory. All Rights Reserved.
+        &copy; <?= date('Y'); ?> Student Branch Directory System
     </footer>
 
 </body>
