@@ -19,7 +19,6 @@
         height: 100vh;
     }
 
-    /* Sidebar */
     .sidebar {
         background: #1c1c1c;
         width: 250px;
@@ -57,7 +56,6 @@
         transform: translateX(5px);
     }
 
-    /* Main Content */
     .content {
         flex: 1;
         display: flex;
@@ -104,10 +102,6 @@
         <h1>Welcome to the Student Branch Directory</h1>
         <p>Manage student records easily. You can add, view, edit, or delete data using the sidebar menu.</p>
     </div>
-
-    <footer>
-        &copy; <?= date('Y'); ?> Student Branch Directory System
-    </footer>
 
 </body>
 </html>
